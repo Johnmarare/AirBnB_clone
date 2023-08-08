@@ -9,7 +9,7 @@ import datetime
 class BaseModel:
     """This is the parent class of all other classes in the project"""
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """
         Args:
             id (str): The goal is to have unique id for each BaseModel
@@ -22,6 +22,23 @@ class BaseModel:
         self.id = str(uuid.uuid4())  # generate a uuid and convert it to string
         self.created_at = datetime.datetime.now(datetime.timezone.utc)
         self.updated_at = self.created_at
+
+        if kwargs:
+            for key, value in kwargs.items():
+                if key != '__class__':
+                    setattr(self, key, value)
+            if 'created_at' in kwargs:
+                if isinstance(kwargs['created_at'], str):
+                    self.created_at = datetime.datetime.strptime(
+                        kwargs['created_at'], "%Y-%m-%dT%H:%M:%S.%f")
+                else:
+                    self.created_at = kwargs['created_at']
+            if 'updated_at' in kwargs:
+                if isinstance(kwargs['updated_at'], str):
+                    self.updated_at = datetime.datetime.strptime(
+                        kwargs['updated_at'], "%Y-%m-%dT%H:%M:%S.%f")
+                else:
+                    self.updated_at = kwargs['updated_at']
 
     def __str__(self):
         """returns class name, id and __dict__"""
