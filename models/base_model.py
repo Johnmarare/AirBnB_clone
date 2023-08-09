@@ -4,6 +4,7 @@
 """
 import uuid
 import datetime
+import models
 
 
 class BaseModel:
@@ -39,6 +40,9 @@ class BaseModel:
                         kwargs['updated_at'], "%Y-%m-%dT%H:%M:%S.%f")
                 else:
                     self.updated_at = kwargs['updated_at']
+            if 'id' not in kwargs:
+                """if its a new instance, add a call to new() on storage"""
+                models.storage.new(self)
 
     def __str__(self):
         """returns class name, id and __dict__"""
@@ -50,6 +54,7 @@ class BaseModel:
             updated_at with the current datetime
         """
         self.updated_at = datetime.datetime.now(datetime.timezone.utc)
+        models.storage.save()
 
     def to_dict(self):
         """returns a dictionary
@@ -67,5 +72,4 @@ class BaseModel:
         }
 
         attribute_dict.update(self.__dict__)  # add instance specific attribute
-
         return attribute_dict
