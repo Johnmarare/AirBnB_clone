@@ -20,56 +20,41 @@ class BaseModel:
             when an instance is created
             and it will be updated every time you change your object
         """
-        self.id = str(uuid.uuid4())  # generate a uuid and convert it to string
-        self.created_at = datetime.datetime.now(datetime.timezone.utc)
-        self.updated_at = self.created_at
-
         if kwargs:
             for key, value in kwargs.items():
-                if key != '__class__':
+                if key != "__class__":
+                    if key == "created_at" or key == "updated_at":
+                        value = datetime.datetime.strptime(
+                            value, "%Y-%m-%dT%H:%M:%S.%f")
                     setattr(self, key, value)
-            if 'created_at' in kwargs:
-                if isinstance(kwargs['created_at'], str):
-                    self.created_at = datetime.datetime.strptime(
-                        kwargs['created_at'], "%Y-%m-%dT%H:%M:%S.%f")
-                else:
-                    self.created_at = kwargs['created_at']
-            if 'updated_at' in kwargs:
-                if isinstance(kwargs['updated_at'], str):
-                    self.updated_at = datetime.datetime.strptime(
-                        kwargs['updated_at'], "%Y-%m-%dT%H:%M:%S.%f")
-                else:
-                    self.updated_at = kwargs['updated_at']
-            if 'id' not in kwargs:
-                """if its a new instance, add a call to new() on storage"""
-                models.storage.new(self)
+            if "id" not in kwargs:
+                setattr(self, "id", str(uuid.uuid4()))
+
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.datetime.utcnow()
+            self.updated_at = self.created_at
+            models.storage.new(self)
 
     def __str__(self):
         """returns class name, id and __dict__"""
         class_name = self.__class__.__name__
-        return "[{}] ({}) {}".format(class_name, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(
+            class_name, self.id, self.__dict__)
 
     def save(self):
         """updates the public instance attribute
             updated_at with the current datetime
         """
-        self.updated_at = datetime.datetime.now(datetime.timezone.utc)
+        self.updated_at = datetime.datetime.utcnow()
         models.storage.save()
 
     def to_dict(self):
         """returns a dictionary
             containing all keys/values of __dict__ of the instance
         """
-        class_name = self.__class__.__name__
-        formatted_created_at = self.created_at.isoformat()
-        formatted_updated_at = self.updated_at.isoformat()
-
-        attribute_dict = {
-            "__class__": class_name,
-            "id": self.id,
-            "created_at": formatted_created_at,
-            "updated_at": formatted_updated_at
-        }
-
-        attribute_dict.update(self.__dict__)  # add instance specific attribute
-        return attribute_dict
+        new_dict = self.__dict__.copy()
+        new_dict["created_at"] = self.created_at.isoformat()
+        new_dict["updated_at"] = self.updated_at.isoformat()
+        new_dict["__class__"] = self.__class__.__name__
+        return new_dict
