@@ -39,8 +39,8 @@ class HBNBCommand(cmd.Cmd):
             print(obj.id)
 
     def do_show(self, arg):
-        """Prints the string representation of an instance based on the class"""
-        clsname, objid = None, None
+        """Prints the string representation of an instance on the class"""
+        clsname, objid = None, Nonei
         args = arg.split(' ')
         if len(args) > 0:
             clsname = args[0]
