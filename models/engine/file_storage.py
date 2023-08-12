@@ -10,6 +10,7 @@ from models.place import Place
 from models.review import Review
 from models.user import User
 
+
 class FileStorage:
     """
     defines file storage class that serializes instances to a JSON file
