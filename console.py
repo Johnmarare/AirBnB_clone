@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-"""This is AirBnB console"""
+"""Defines the HBnB console"""
 
 import cmd
 import models
@@ -28,7 +28,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, clsname=None):
-        """Creates a new instance of BaseModel, saves it (to the JSON file"""
+        """Creates a new instance of BaseModel, saves it and prints the id"""
         if not clsname:
             print('** class name missing **')
         elif not self.clslist.get(clsname):
@@ -39,8 +39,8 @@ class HBNBCommand(cmd.Cmd):
             print(obj.id)
 
     def do_show(self, arg):
-        """Prints the string representation of an instance on the class"""
-        clsname, objid = None, Nonei
+        """Show instance based on id"""
+        clsname, objid = None, None
         args = arg.split(' ')
         if len(args) > 0:
             clsname = args[0]
@@ -61,8 +61,7 @@ class HBNBCommand(cmd.Cmd):
                 print(obj)
 
     def do_destroy(self, arg):
-        """Deletes an instance based on the class name
-        saves the id id (save the change into the JSON file).
+        """destroy instance based on id
         """
         clsname, objid = None, None
         args = arg.split(' ')
