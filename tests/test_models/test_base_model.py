@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Defines unittests for models/base_model.py.
+"""Defines unittests for base_model.py.
 
 Unittest classes:
     TestBaseModel_instantiation
