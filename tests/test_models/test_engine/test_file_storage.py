@@ -16,7 +16,7 @@ from models.review import Review
 
 
 class TestFileStorage(unittest.TestCase):
-    """Unittests for testing instantiation of the FileStorage class."""
+    """testing instantiation of the FileStorage class."""
 
     def test_FileStorage_no_args(self):
         self.assertEqual(type(FileStorage()), FileStorage)
@@ -36,7 +36,7 @@ class TestFileStorage(unittest.TestCase):
 
 
 class TestFileStorage_methods(unittest.TestCase):
-    """Unittests for testing methods of the FileStorage class."""
+    """testing methods of the FileStorage class."""
 
     @classmethod
     def setUp(self):
