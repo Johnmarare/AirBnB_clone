@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
 ![Console](https://github.com/daorejuela1/AirBnB_clone/blob/master/images/console_airbnb.png)
-"Structure of the project"
+"Structure of the AirBnb project"
 
 `Storage engine -> Json file.`
 `Console -> cmd with python library cmd.Cmd`
