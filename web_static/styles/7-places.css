@@ -1,0 +1,28 @@
+/* places class style */
+.places {
+    text-align: center;
+}
+
+article {
+    border: 1px solid #ff5a5f;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 20px;
+    padding: 20px;
+    width: 390px;
+}
+
+/* places header 1 style */
+.places h1 {
+    font-size: 30px;
+    font-weight: bold;
+    width: 100%;
+    text-align: left;
+}
+
+/* header 2 style */
+article h2 {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
